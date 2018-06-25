@@ -30,3 +30,9 @@ hs_err_pid*
 *.dat
 *.csv
 C#/.vs/
+.vs/
+C#/Duplicate/bin/
+C#/Duplicate/obj/
+*.user
+C#/extern/NtfsReader/bin/
+C#/extern/NtfsReader/obj/
