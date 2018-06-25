@@ -13,7 +13,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        FileSystem fileSystem = FileSystem.loadFromFile("dumpfile.dat");
+        //FileSystem fileSystem = FileSystem.loadFromFile("dumpfile1529550318663.dat");
+        FileSystem fileSystem = FileList.createList("C:\\");
         System.out.println("open ok");
         Tree tree = FileSystemUtils.FileSystemToTree(fileSystem);
         System.out.println("to tree ok");
@@ -21,5 +22,6 @@ public class Main {
         findDuplicate.findDuplicate(tree);
         System.out.println("find ok");
         findDuplicate.Test();
+        //System.in.read();
     }
 }

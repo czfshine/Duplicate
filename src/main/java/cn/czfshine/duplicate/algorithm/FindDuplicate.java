@@ -58,7 +58,7 @@ public class FindDuplicate {
 
     private void placeDirToHashMap(){
         for(TreeNode node : dirlist){
-            putNodeToHashMAp(node.hashCode(),node);
+            putNodeToHashMAp(node.getHashCode(),node);
         }
     }
 
@@ -69,22 +69,42 @@ public class FindDuplicate {
 
         for(int i=0;i<dirlen;i++){
             TreeNode treeNode = dirlist.get(i);
-            if(compared.contains(treeNode.hashCode())){
+            if(compared.contains(treeNode.getHashCode())){
                 continue;
             }
-            compared.add(treeNode.hashCode());
-            compareAllSameHashDir(treeNode.hashCode());
-            System.out.println(treeNode.getLevel());
+            compared.add(treeNode.getHashCode());
+            compareAllSameHashDir(treeNode.getHashCode());
+            //System.out.println(treeNode.getLevel());
         }
     }
+    private Set<TreeNode> skip=new HashSet<>();
 
     private void compareAllSameHashDir(int hash){
         List<TreeNode> list = dirhashmap.get(hash);
-        if(list.size()>10000){
+        /*if(list.size()>10000){
+            System.out.println( list.get(1).getHashCode());
             return;//todo
-        }
+        }*/
         for(int i=0;i<list.size()-1;i++){
+            if(skip.contains(list.get(i)))
+                continue;
+            if( list.get(i).getChildren().size()==0){
+                continue;
+            }
+
+            if(list.get(i).getHashCode()==1){
+                //System.out.println(i);
+                    /*System.out.println(((DirContent)(list.get(i))).getPath());
+                    System.out.println(((DirContent)(list.get(j))).getPath());*/
+            }
             for(int j=i+1;j<list.size();j++){
+                if(skip.contains(list.get(j)))
+                    continue;
+
+                if( list.get(j).getChildren().size()==0){
+                    continue;
+                }
+
                 compareSameHashDir(list.get(i),list.get(j));
                 //System.out.println("compare"+i+","+j);
             }
@@ -94,7 +114,7 @@ public class FindDuplicate {
 
     private Map<Pair<TreeNode,TreeNode>,Boolean> samehash =new HashMap<>();
     private void compareSameHashDir(TreeNode a,TreeNode b){
-        if(a.hashCode()!=b.hashCode()){
+        if(a.getHashCode()!=b.getHashCode()){
             return;
         }
 
@@ -111,7 +131,7 @@ public class FindDuplicate {
     private Set<Pair<TreeNode,TreeNode>> sameNode=new HashSet<>();
 
     private Boolean compareDir(TreeNode a,TreeNode b){
-        if(a.hashCode()!=b.hashCode()){
+        if(a.getHashCode()!=b.getHashCode()){
             return false;
         }
 
@@ -134,10 +154,19 @@ public class FindDuplicate {
         }
         if(a instanceof DirContent && b instanceof DirContent){
             sameNode.add(new Pair<>(a,b));
+            skipAll(a);
+            skipAll(b);
         }
+
         return true;
     }
 
+    private void skipAll(TreeNode node){
+        skip.add(node);
+        for(TreeNode n: node.getChildren()){
+            skipAll(n);
+        }
+    }
     public void Test() throws IOException {
         System.out.println("Dir count:"+dirlist.size());
         System.out.println("Hash count"+dirhashmap.size());
@@ -145,11 +174,23 @@ public class FindDuplicate {
         for(Integer i: dirhashmap.keySet()) csv.write(i,dirhashmap.get(i).size());
 
         System.out.println("smae node count:"+sameNode.size());
+        int zerocount =0;
+        int maxoutput=100;
+        int i=0;
         for(Pair<TreeNode,TreeNode> pair:sameNode){
             DirContent dirContent=(DirContent) pair.getKey();
             DirContent dirContent1=(DirContent) pair.getValue();
-            System.out.println(dirContent.getPath()+"&&"+dirContent1.getPath());
+            if(dirContent.getSize()==0){
+                zerocount++;
+            }
+            if(i<maxoutput){
+                System.out.println(dirContent.getPath()+"&&"+dirContent1.getPath());
+                i++;
+            }
+
         }
+        System.out.println(zerocount);
+
     }
 
 }

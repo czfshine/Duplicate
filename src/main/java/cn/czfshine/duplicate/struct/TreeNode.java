@@ -68,4 +68,5 @@ public abstract class TreeNode implements Levelable {
     public int getLevel() {
         return level;
     }
+    public abstract int getHashCode();
 }

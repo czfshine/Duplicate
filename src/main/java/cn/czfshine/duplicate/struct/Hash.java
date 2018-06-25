@@ -8,5 +8,5 @@ package cn.czfshine.duplicate.struct;
 public interface Hash {
 
     int getHash();
-    int update(Object hash);
+    int update(int hash);
 }

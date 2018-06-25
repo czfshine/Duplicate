@@ -8,30 +8,29 @@ package cn.czfshine.duplicate.struct;
 public class DirContent extends TreeNode implements HasSize {
 
     MulitHash mulitHash;
-    XorHash xorHash;
+    //XorHash xorHash;
 
     private String path;
     private int getHash(){
-       return  mulitHash.getHash()+xorHash.getHash();
+       return  mulitHash.getHash()+(int)size;
     }
-    @Override
-    public int hashCode() {
+    public int getHashCode() {
         if(mulitHash!=null){
             return getHash();
         }
         mulitHash=new MulitHash();
-        xorHash=new XorHash();
+        //xorHash=new XorHash();
 
         for(TreeNode node:getChildren()){
             if(node instanceof  FileContent){
                 FileContent fileContent = (FileContent)node;
-                mulitHash.update(fileContent.getSize());
-                xorHash.update(fileContent.getSize());
+                mulitHash.update((int)fileContent.getSize());
+                //xorHash.update(fileContent.getSize());
             }
             if(node instanceof  DirContent){
                 DirContent dirContent = (DirContent)node;
-                mulitHash.update(dirContent.hashCode());
-                xorHash.update(dirContent.hashCode());
+                mulitHash.update(dirContent.getHashCode());
+                //xorHash.update(dirContent.getHashCode());
             }
         }
         return getHash() ;

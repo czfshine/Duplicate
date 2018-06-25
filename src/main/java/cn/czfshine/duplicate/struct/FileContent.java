@@ -26,4 +26,14 @@ public class FileContent extends TreeNode implements HasSize {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+    @Override
+    public void addChildren(TreeNode node) throws Exception {
+        throw new Exception("Are you kidding me? a file has children?");
+    }
+
+    @Override
+    public int getHashCode() {
+        return hashCode();
+    }
 }

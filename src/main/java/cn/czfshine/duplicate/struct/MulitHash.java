@@ -14,13 +14,16 @@ public class MulitHash implements Hash {
     }
 
     @Override
-    public int update(Object hash) {
-
-        Integer h=((Number)hash).intValue();
-        if(h==0){
+    public int update(int hash) {
+        if(hash==0){
             return this.hash;
         }
-        this.hash=this.hash*h;
+
+        while(hash%2==0){
+            hash>>=1;
+        }
+        this.hash=this.hash*hash;
+
         return this.hash;
     }
 }

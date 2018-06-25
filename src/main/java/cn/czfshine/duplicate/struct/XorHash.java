@@ -6,7 +6,7 @@ package cn.czfshine.duplicate.struct;
  */
 
 public class XorHash implements Hash {
-
+    /*todo*/
     private Byte[] intbyte;
 
     public XorHash(){
@@ -27,7 +27,7 @@ public class XorHash implements Hash {
     }
 
     @Override
-    public int update(Object hash) {
+    public int update(int hash) {
         int  number=((Number)hash).intValue();
         byte[] bytes = {
                 (byte) ((number >> 24) & 0xFF),

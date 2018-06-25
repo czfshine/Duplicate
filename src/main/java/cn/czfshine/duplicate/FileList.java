@@ -7,6 +7,7 @@ import cn.czfshine.duplicate.vfs.VirtualFiles;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
 
 import static java.nio.file.Files.walkFileTree;
 
@@ -53,7 +54,7 @@ public class FileList {
         }
     }
 
-    public static  FileList createList(String pathstr) throws IOException {
+    public static FileSystem createList(String pathstr) throws IOException {
         final int[] count = {0};
         FileSystem fileSystem = new FileSystem(pathstr);
         VirtualDirs root =fileSystem.getRoot();
@@ -63,8 +64,8 @@ public class FileList {
         pathFileVisitor.setCurdir(root);
         Files.walkFileTree(path,pathFileVisitor );
 
-        fileSystem.dumpFile("dumpfile.dat");
+        fileSystem.dumpFile("dumpfile"+ new Date().getTime()+".dat");
         //fileSystem.showTree();
-        return null;
+        return fileSystem;
     }
 }
