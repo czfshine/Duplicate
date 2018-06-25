@@ -36,3 +36,4 @@ C#/Duplicate/obj/
 *.user
 C#/extern/NtfsReader/bin/
 C#/extern/NtfsReader/obj/
+out.txt
